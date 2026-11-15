@@ -41,17 +41,22 @@ public final class Shockwave {
 
 		float eased = 1f - (1f - p) * (1f - p);
 		float r = maxRadius * eased;
-		float t = ShockwavesClient.RING_THICKNESS;
+		float front = ShockwavesClient.FRONT_WIDTH;
+		float trail = ShockwavesClient.TRAIL_WIDTH;
 		float fade = 1f - p;
 
-		int minX = (int) Math.floor(cx - r - t), maxX = (int) Math.ceil(cx + r + t);
-		int minZ = (int) Math.floor(cz - r - t), maxZ = (int) Math.ceil(cz + r + t);
+		float reach = r + Math.max(front, trail);
+		int minX = (int) Math.floor(cx - reach), maxX = (int) Math.ceil(cx + reach);
+		int minZ = (int) Math.floor(cz - reach), maxZ = (int) Math.ceil(cz + reach);
 
 		for (int x = minX; x <= maxX; x++) {
 			for (int z = minZ; z <= maxZ; z++) {
 				double dx = x + 0.5 - cx, dz = z + 0.5 - cz;
-				double off = Math.abs(Math.sqrt(dx * dx + dz * dz) - r);
-				if (off > t) continue;
+				// signed distance from the ring's leading edge: + is ahead of it, - is behind it
+				double s = Math.sqrt(dx * dx + dz * dz) - r;
+				if (s > front || s < -trail) continue;
+
+				float weight = s >= 0 ? (float) (1.0 - s / front) : (float) (1.0 + s / trail);
 
 				long key = BlockPos.asLong(x, 0, z);
 				Integer cached = surfaceCache.get(key);
@@ -64,7 +69,7 @@ public final class Shockwave {
 				}
 				if (gy == NONE) continue;
 
-				consumer.accept(x, gy, z, (float) (1.0 - off / t), fade);
+				consumer.accept(x, gy, z, weight, fade);
 			}
 		}
 	}
