@@ -21,8 +21,8 @@ public class ShockwavesClient implements ClientModInitializer {
 	public static final String MOD_ID = "shockwaves";
 
 	// ---- settings ----
-	public static final int COLOR = 0xFF00FF;          // fuchsia
-	public static final float ALPHA = 0.55f;
+	public static final int COLOR = 0xB800B8;          // deeper fuchsia
+	public static final float ALPHA = 0.3f;            // softer
 	public static final float MAX_RADIUS = 6f;
 	public static final float RING_THICKNESS = 2f;
 	public static final float LIFT = 0.6f;             // how far the wave front rises
