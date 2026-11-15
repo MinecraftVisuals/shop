@@ -53,7 +53,15 @@ public final class Shockwave {
 				double off = Math.abs(Math.sqrt(dx * dx + dz * dz) - r);
 				if (off > t) continue;
 
-				int gy = surfaceCache.computeIfAbsent(BlockPos.asLong(x, 0, z), k -> findSurface(level, x, z));
+				long key = BlockPos.asLong(x, 0, z);
+				Integer cached = surfaceCache.get(key);
+				int gy;
+				if (cached == null) {
+					gy = findSurface(level, x, z);
+					surfaceCache.put(key, gy);
+				} else {
+					gy = cached;
+				}
 				if (gy == NONE) continue;
 
 				consumer.accept(x, gy, z, (float) (1.0 - off / t), fade);
