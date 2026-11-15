@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "id": "shockwaves",
+  "version": "1.0.0",
+  "name": "Shockwaves",
+  "description": "Fuchsia shockwave ring that expands from your feet when you jump or land.",
+  "authors": ["You"],
+  "contact": {},
+  "license": "MIT",
+  "environment": "client",
+  "entrypoints": {
+    "client": ["com.shockwaves.ShockwavesClient"]
+  },
+  "depends": {
+    "fabricloader": ">=0.18.1",
+    "minecraft": "~1.21.11",
+    "java": ">=21",
+    "fabric-api": "*"
+  }
+}
