@@ -69,10 +69,16 @@ public final class Shockwave {
 		}
 	}
 
-	/** Returns the Y of the air space sitting on top of the first solid block found. */
+	/**
+	 * Finds the air space on top of the first solid block, but only within a small
+	 * window around the player's feet, so trees and ledges above are ignored.
+	 */
 	private int findSurface(ClientLevel level, int x, int z) {
 		BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
-		for (int y = originY + 3; y >= originY - 6; y--) {
+		int top = originY + ShockwavesClient.STEP_UP - 1;
+		int bottom = originY - ShockwavesClient.STEP_DOWN - 1;
+
+		for (int y = top; y >= bottom; y--) {
 			pos.set(x, y, z);
 			BlockState state = level.getBlockState(pos);
 			if (state.getCollisionShape(level, pos).isEmpty()) continue;
