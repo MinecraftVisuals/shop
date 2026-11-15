@@ -22,11 +22,13 @@ public class ShockwavesClient implements ClientModInitializer {
 
 	// ---- settings ----
 	public static final int COLOR = 0xB800B8;          // deeper fuchsia
-	public static final float ALPHA = 0.3f;            // softer
+	public static final float ALPHA = 0.3f;
 	public static final float MAX_RADIUS = 6f;
-	public static final float RING_THICKNESS = 2f;
+	public static final float FRONT_WIDTH = 0.7f;      // how far the ring reaches ahead of its edge
+	public static final float TRAIL_WIDTH = 1.8f;      // how long the tail behind the edge is
 	public static final float LIFT = 0.6f;             // how far the wave front rises
-	public static final long DURATION_MS = 1100;
+	public static final long DURATION_MS = 700;
+	public static final float JUMP_STRENGTH = 0.9f;    // 1.0 = full MAX_RADIUS
 	public static final int STEP_UP = 1;               // blocks above your feet it can climb
 	public static final int STEP_DOWN = 2;             // blocks below your feet it can follow
 	public static final boolean ON_JUMP = true;
@@ -70,10 +72,10 @@ public class ShockwavesClient implements ClientModInitializer {
 
 			if (enabled) {
 				if (ON_JUMP && wasOnGround && !ground && p.getDeltaMovement().y > 0) {
-					spawn(p, 0.6f);
+					spawn(p, JUMP_STRENGTH);
 				}
 				if (ON_LAND && !wasOnGround && ground && airTicks >= 3) {
-					spawn(p, (float) Math.min(1.0, 0.5 + fallSpeed));
+					spawn(p, (float) Math.min(1.0, 0.7 + fallSpeed));
 				}
 			}
 
