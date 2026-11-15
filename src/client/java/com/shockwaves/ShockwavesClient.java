@@ -23,10 +23,12 @@ public class ShockwavesClient implements ClientModInitializer {
 	// ---- settings ----
 	public static final int COLOR = 0xFF00FF;          // fuchsia
 	public static final float ALPHA = 0.55f;
-	public static final float MAX_RADIUS = 12f;
-	public static final float RING_THICKNESS = 2.5f;
+	public static final float MAX_RADIUS = 6f;
+	public static final float RING_THICKNESS = 2f;
 	public static final float LIFT = 0.6f;             // how far the wave front rises
 	public static final long DURATION_MS = 1100;
+	public static final int STEP_UP = 1;               // blocks above your feet it can climb
+	public static final int STEP_DOWN = 2;             // blocks below your feet it can follow
 	public static final boolean ON_JUMP = true;
 	public static final boolean ON_LAND = true;
 
